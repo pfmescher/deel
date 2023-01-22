@@ -1,7 +1,7 @@
-const { Router } = require("express")
-const { Op } = require("sequelize");
+const { Router } = require('express');
+const { Op } = require('sequelize');
 
-const contractRoutes = new Router()
+const contractRoutes = new Router();
 
 /**
  * Returns a contract by id only if it belongs to the current profile
@@ -45,4 +45,4 @@ contractRoutes.get('/contracts', async (req, res) => {
   res.json(contracts);
 });
 
-module.exports = contractRoutes
+module.exports = contractRoutes;

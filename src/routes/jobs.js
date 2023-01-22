@@ -1,8 +1,8 @@
-const { Router } = require("express")
-const { Op } = require("sequelize");
-const { sequelize } = require("../model");
+const { Router } = require('express');
+const { Op } = require('sequelize');
+const { sequelize } = require('../model');
 
-const jobRoutes = new Router()
+const jobRoutes = new Router();
 
 /**
  * Get all unpaid jobs for a user (**_either_** a client or contractor), for **_active contracts only_**
@@ -82,4 +82,4 @@ jobRoutes.post('/jobs/:job_id/pay', async (req, res) => {
   return res.status(200).end();
 });
 
-module.exports = jobRoutes
+module.exports = jobRoutes;

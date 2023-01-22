@@ -1,8 +1,8 @@
-const { Router } = require("express")
-const { Op } = require("sequelize");
-const { sequelize } = require("../model");
+const { Router } = require('express');
+const { Op } = require('sequelize');
+const { sequelize } = require('../model');
 
-const balanceRoutes = new Router()
+const balanceRoutes = new Router();
 
 /**
  * Deposits money into the balance of a client, a client can't deposit more than 25% his total of jobs to pay. (at the deposit moment)
@@ -26,17 +26,17 @@ balanceRoutes.post('/balances/deposit/:userId', async (req, res) => {
     return res.status(400).json({
       code: 400,
       message: 'Deposit amount must be a positive number'
-    })
+    });
   }
 
   if (deposit_amount > req.profile.balance) {
     return res.status(400).json({
       code: 400,
       message: 'You do not have enough balance to make this deposit'
-    })
+    });
   }
 
-  const user = await Profile.findByPk(userId)
+  const user = await Profile.findByPk(userId);
 
   if (!user) {
     return res.status(404).json({
@@ -72,12 +72,18 @@ balanceRoutes.post('/balances/deposit/:userId', async (req, res) => {
   const transaction = await sequelize.transaction();
 
   try {
-    await user.update({
-      balance: user.balance += deposit_amount
-    }, { transaction });
-    await req.profile.update({
-      balance: req.profile.balance -= deposit_amount
-    }, { transaction })
+    await user.update(
+      {
+        balance: (user.balance += deposit_amount)
+      },
+      { transaction }
+    );
+    await req.profile.update(
+      {
+        balance: (req.profile.balance -= deposit_amount)
+      },
+      { transaction }
+    );
     transaction.commit();
   } catch (e) {
     console.log(e);
@@ -85,10 +91,10 @@ balanceRoutes.post('/balances/deposit/:userId', async (req, res) => {
     return res.status(500).json({
       code: 500,
       message: 'Internal Server Error'
-    })
+    });
   }
 
   res.status(200).end();
 });
 
-module.exports = balanceRoutes
+module.exports = balanceRoutes;
