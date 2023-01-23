@@ -1,5 +1,9 @@
 module.exports = function (sequelize, Sequelize) {
-  class Profile extends Sequelize.Model {}
+  class Profile extends Sequelize.Model {
+    fullName() {
+      return `${this.firstName} ${this.lastName}`
+    }
+  }
   Profile.init(
     {
       firstName: {
